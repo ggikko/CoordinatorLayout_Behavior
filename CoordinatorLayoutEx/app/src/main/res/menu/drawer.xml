@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/home"
+            android:title="@string/home"/>
+
+        <item
+            android:id="@+id/me"
+            android:title="@string/me"/>
+
+        <item
+            android:id="@+id/friends"
+            android:title="@string/friends"/>
+
+        <item
+            android:id="@+id/myteam"
+            android:title="@string/myteam"/>
+        <item
+            android:id="@+id/contest"
+            android:title="@string/contest"/>
+        <item
+            android:id="@+id/settings"
+            android:title="@string/settings"/>
+
+    </group>
+
+</menu>
