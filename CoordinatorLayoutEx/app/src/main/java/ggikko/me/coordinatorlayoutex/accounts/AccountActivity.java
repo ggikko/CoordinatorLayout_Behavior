@@ -1,49 +1,42 @@
-package ggikko.me.coordinatorlayoutex;
+package ggikko.me.coordinatorlayoutex.accounts;
 
-import android.content.Intent;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ggikko.me.coordinatorlayoutex.accounts.AccountActivity;
+import ggikko.me.coordinatorlayoutex.ContestFragment;
+import ggikko.me.coordinatorlayoutex.FriendsFragment;
+import ggikko.me.coordinatorlayoutex.MeFragment;
+import ggikko.me.coordinatorlayoutex.MyTeamFragment;
+import ggikko.me.coordinatorlayoutex.R;
 
-public class MainActivity extends AppCompatActivity {
+public class AccountActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
     private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_account);
+
+
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.mToolbar);
         setSupportActionBar(toolbar);
 
-        final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ActionBar ab = getSupportActionBar();
+        ab.setHomeButtonEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
-
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        NavigationView navView = (NavigationView) findViewById(R.id.navigation_view);
-        if (navView != null){
-            setupDrawerContent(navView);
-        }
-
 
         viewPager = (ViewPager)findViewById(R.id.tab_viewpager);
         if (viewPager != null){
@@ -70,18 +63,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new MeFragment(), "me");
-        adapter.addFrag(new FriendsFragment(), "friends");
-        adapter.addFrag(new MyTeamFragment(), "myTeam");
-        adapter.addFrag(new ContestFragment(), "contest");
+        adapter.addFrag(new ResultFragment(), "결과");
+        adapter.addFrag(new StatisticsFragment(), "통계");
+        adapter.addFrag(new ResultFragment(), "달성");
         viewPager.setAdapter(adapter);
     }
-
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -111,53 +113,5 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position){
             return mFragmentTitleList.get(position);
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        switch (id){
-            case android.R.id.home:
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)){
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setupDrawerContent(NavigationView navigationView){
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
-
-                switch (menuItem.getItemId()) {
-                    case R.id.me:
-                        Intent intent = new Intent(MainActivity.this, AccountActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
     }
 }

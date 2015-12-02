@@ -15,4 +15,8 @@
     <string name="myteam">팀</string>
     <string name="contest">대회</string>
     <string name="settings">환경설정</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_name">나</string>
 </resources>

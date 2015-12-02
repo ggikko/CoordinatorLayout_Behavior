@@ -4,7 +4,7 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/home"
+            android:id="@+id/tohome"
             android:title="@string/home"/>
 
         <item
